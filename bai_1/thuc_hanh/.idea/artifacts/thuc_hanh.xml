@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" build-on-make="true" name="thuc_hanh">
+    <output-path>$PROJECT_DIR$/out/artifacts/thuc_hanh</output-path>
+    <root id="root">
+      <element id="archive" name="thuc_hanh.jar">
+        <element id="module-output" name="thuc_hanh" />
+      </element>
+    </root>
+  </artifact>
+</component>
