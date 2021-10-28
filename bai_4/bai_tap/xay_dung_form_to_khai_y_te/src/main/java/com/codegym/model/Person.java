@@ -15,14 +15,14 @@ public class Person {
     private Address address;
     private String phone;
     private String email;
-    private boolean[] symptom;
-    private boolean[] history;
+    private Symptom symptom;
+    private History history;
 
     public Person() {
     }
 
     public Person(String name, int yearOfBirth, int gender, String nationality, String idCard,
-                  int vehicle, String vehicleName, String seat, StartDate startDate, EndDate endDate, String city, Address address, String phone, String email, boolean[] symptom, boolean[] history) {
+                  int vehicle, String vehicleName, String seat, StartDate startDate, EndDate endDate, String city, Address address, String phone, String email, Symptom symptom, History history) {
         this.name = name;
         this.yearOfBirth = yearOfBirth;
         this.gender = gender;
@@ -153,19 +153,19 @@ public class Person {
         this.email = email;
     }
 
-    public boolean[] getSymptom() {
+    public Symptom getSymptom() {
         return symptom;
     }
 
-    public void setSymptom(boolean[] symptom) {
+    public void setSymptom(Symptom symptom) {
         this.symptom = symptom;
     }
 
-    public boolean[] getHistory() {
+    public History getHistory() {
         return history;
     }
 
-    public void setHistory(boolean[] history) {
+    public void setHistory(History history) {
         this.history = history;
     }
 }

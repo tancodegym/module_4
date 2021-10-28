@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body style="text-align: center">
+<strong style="color: green;font-size: xx-large" th:if="${khaibao}" th:text="${khaibao}"></strong>
+<strong style="color: green;font-size: xx-large" th:if="${chinhsua}" th:text="${chinhsua}"></strong>
+<a th:href="@{/edit}"><h1>Chỉnh sửa khai báo y tế </h1></a>
+
+</body>
+</html>

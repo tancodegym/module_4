@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assert/bootstrap413/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assert/datatables/css/dataTables.bootstrap4.min.css">
+    <style>
+        span {
+            color: red;
+        }
+    </style>
+</head>
+
+<body class="font-weight-bold">
+<form th:object="${person}" th:action="@{/create}" method="post">
+<div class="row text-center">
+    <div class="col-12">
+        <p>TỜ KHAI Y TẾ</p>
+    </div>
+</div>
+<div class="row text-center">
+    <div class="col-12">
+        <p>ĐÂY LÀ TÀI LIỆU QUAN TRỌNG, THÔNG TIN Của Anh/CHỊ SẼ GIÚP CƠ QUAN Y TẾ LIÊN LẠC KHI CẦN THIẾT ĐỂ PHÒNG CHỐNG
+            DỊCH BỆNH TRUYỀN NHIỄM</p>
+    </div>
+</div>
+<div class="row text-center">
+    <div class="col-12">
+        <span>Khuyến cáo: Khai báo thông tin sai là vi phạm pháp luật Việt Nam và có thể xử lý hình sự</span>
+    </div>
+</div>
+<br>
+<br>
+<br>
+
+<div class="row">
+    <div class="col-12">
+        <p>Họ tên (ghi chữ IN HOA) <span>(*)</span></p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <input th:field="${person.name}" } style="width: 100%">
+    </div>
+</div>
+<div class="row">
+    <div class="col-4">
+        <p>Năm sinh<span>(*)</span></p>
+        <select th:field="${person.yearOfBirth}" style="width: 100%">
+            <option th:each="i : ${#numbers.sequence(1900,2021)}" th:value="${i}" th:text="${i}">
+            </option>
+        </select>
+    </div>
+    <div class="col-4">
+        <p>Giới tính<span>(*)</span></p>
+        <select th:field="${person.gender}" style="width: 100%;">
+            <option th:value="0" th:text="Nam">
+            <option th:value="1" th:text="Nữ">
+        </select>
+    </div>
+    <div class="col-4">
+        <p>Quốc tịch<span>(*)</span></p>
+        <input th:field="${person.nationality}" placeholder="Việt Nam" } style="width: 100%">
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-12">
+        <p>Số hộ chiếu hoặc số CMND hoặc giấy thông hành hợp pháp khác<span>(*)</span></p>
+        <input th:field="${person.idCard}" } style="width: 100%">
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <p>Thông tin đi lại<span>(*)</span></p>
+        <div class="row">
+            <div class="col-1"><input type="radio" th:field="${person.vehicle}" value="1" >Tàu bay </div>
+            <div class="col-1"><input type="radio" th:field="${person.vehicle}" value="2" >Tàu thuyền </div>
+            <div class="col-1"><input type="radio" th:field="${person.vehicle}" value="3" >Ô tô </div>
+            <div class="col-1"><input type="radio" th:field="${person.vehicle}" value="4" >Khác(Ghi rõ) </div>
+            <div class="col-8"></div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-6">
+        <p>Số hiệu phương tiện</p>
+        <input th:field="${person.vehicleName}" } placeholder="VD: VN123" style="width: 100%">
+    </div>
+    <div class="col-6">
+        <p>Số ghế</p>
+        <input th:field="${person.seat}" } placeholder="VD:A3" style="width: 100%">
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <p>Ngày khởi hành</p>
+        <div class="row">
+            <div class="col-4">
+                <select th:field="${person.startDate.day}" style="width: 100%">
+                    <option th:each="i : ${#numbers.sequence(1,31)}" th:value="${i}" th:text="${i}">
+                    </option>
+                </select>
+            </div>
+            <div class="col-4">
+                <select th:field="${person.startDate.month}" style="width: 100%">
+                    <option th:each="i : ${#numbers.sequence(1,12)}" th:value="${i}" th:text="${i}">
+                    </option>
+                </select>
+            </div>
+            <div class="col-4">
+                <select th:field="${person.startDate.year}" style="width: 100%">
+                    <option th:each="i : ${#numbers.sequence(2019,2021)}" th:value="${i}" th:text="${i}">
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <p>Ngày kết thúc</p>
+        <div class="row">
+            <div class="col-4">
+                <select th:field="${person.endDate.day}" style="width: 100%">
+                    <option th:each="i : ${#numbers.sequence(1,31)}" th:value="${i}" th:text="${i}">
+                    </option>
+                </select>
+            </div>
+            <div class="col-4">
+                <select th:field="${person.endDate.month}" style="width: 100%">
+                    <option th:each="i : ${#numbers.sequence(1,12)}" th:value="${i}" th:text="${i}">
+                    </option>
+                </select>
+            </div>
+            <div class="col-4">
+                <select th:field="${person.endDate.year}" style="width: 100%">
+                    <option th:each="i : ${#numbers.sequence(2019,2021)}" th:value="${i}" th:text="${i}">
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-12">
+        <p>Trong vòng 14 ngày qua, Anh/Chị đã đến tỉnh/thành phố nào?<span>(*)</span></p>
+        <input th:field="${person.idCard}" } style="width: 100%">
+    </div>
+</div>
+<br><br>
+<div class="row">
+    <div class="col-12">
+        <p>Địa chỉ liên lạc</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-4">
+        <p>Tỉnh/thành<span>(*)</span></p>
+        <select th:field="${person.address.country}" style="width: 100%">
+            <option th:each="i : ${countryList}" th:value="${i}" th:text="${i}">
+            </option>
+        </select>
+    </div>
+    <div class="col-4">
+        <p>Quận/huyện<span>(*)</span></p>
+        <select th:field="${person.address.district}" style="width: 100%">
+            <option th:each="i : ${dictrictList}" th:value="${i}" th:text="${i}">
+            </option>
+        </select>
+    </div>
+    <div class="col-4">
+        <p>Xã/phường<span>(*)</span></p>
+        <select th:field="${person.address.ward}" style="width: 100%">
+            <option th:each="i : ${wardList}" th:value="${i}" th:text="${i}">
+            </option>
+        </select>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <p>Địa chỉ nơi ở<span>(*)</span></p>
+        <input th:field="${person.address.street}" } style="width: 100%">
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+        <p>Điện thoại<span>(*)</span></p>
+        <input th:field="${person.phone}" } style="width: 100%">
+    </div>
+    <div class="col-6">
+        <p>Email</p>
+        <input th:field="${person.email}" } style="width: 100%">
+    </div>
+</div>
+<div class="row">
+    <div class="col-12"><p>Trong vòng 14 ngày qua, Anh/Chị có thấy xuất hiện dấu hiệu nào sau đây không
+        ?<span>(*)</span></p></div>
+</div>
+<div class="row">
+    <div class="col-6">
+            <table style="width: 100%" class="table table-striped table-inverse table-responsive">
+                <thead class="thead-inverse">
+                <tr scope="row" style="background-color: dimgray">
+                    <th style="width: 90%;">Triệu chứng</th>
+                    <th style="width: 15%">Có</th>
+                    <th style="width: 15%">Không</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td >Sốt<span>(*)</span></td>
+                    <td> <input type="radio" th:field="${person.symptom.sot}" value="true" ></td>
+                    <td> <input type="radio" th:field="${person.symptom.sot}" value="false" ></td>
+                </tr>
+                <tr>
+                    <td >Ho<span>(*)</span></td>
+                    <td> <input type="radio" th:field="${person.symptom.ho}" value="true" ></td>
+                    <td> <input type="radio" th:field="${person.symptom.ho}" value="false" ></td>
+                </tr>
+                <tr>
+                    <td >Khó Thở<span>(*)</span></td>
+                    <td> <input type="radio" th:field="${person.symptom.khoTho}" value="true" ></td>
+                    <td> <input type="radio" th:field="${person.symptom.khoTho}" value="false" ></td>
+                </tr>
+                <tr>
+                    <td >Đau họng<span>(*)</span></td>
+                    <td> <input type="radio" th:field="${person.symptom.dauHong}" value="true" ></td>
+                    <td> <input type="radio" th:field="${person.symptom.dauHong}" value="false" ></td>
+                </tr>
+                </tbody>
+            </table>
+    </div>
+    <div class="col-6">
+        <table style="width: 100%" class="table table-striped table-inverse table-responsive">
+            <thead class="thead-inverse">
+            <tr scope="row" style="background-color: dimgray">
+                <th style="width: 90%;">Triệu chứng</th>
+                <th style="width: 15%">Có</th>
+                <th style="width: 15%">Không</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td >Nôn/Buồn nôn<span>(*)</span></td>
+                <td> <input type="radio" th:field="${person.symptom.non}" value="true" ></td>
+                <td> <input type="radio" th:field="${person.symptom.non}" value="false" ></td>
+            </tr>
+            <tr>
+                <td >Tiêu chảy<span>(*)</span></td>
+                <td> <input type="radio" th:field="${person.symptom.tieuChay}" value="true" ></td>
+                <td> <input type="radio" th:field="${person.symptom.tieuChay}" value="false" ></td>
+            </tr>
+            <tr>
+                <td >Xuất huyết ngoài da<span>(*)</span></td>
+                <td> <input type="radio" th:field="${person.symptom.xuatHuyet}" value="true" ></td>
+                <td> <input type="radio" th:field="${person.symptom.xuatHuyet}" value="false" ></td>
+            </tr>
+            <tr>
+                <td >Nổi ban ngoài da<span>(*)</span></td>
+                <td> <input type="radio" th:field="${person.symptom.noiBan}" value="true" ></td>
+                <td> <input type="radio" th:field="${person.symptom.noiBan}" value="false" ></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <p>Lịch sử phơi nhiễm: Trong vòng 14 ngày qua, Anh/Chị có <span>(*)</span></p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <table style="width: 100%" class="table table-striped table-inverse table-responsive">
+            <thead class="thead-inverse">
+            <tr scope="row" style="background-color: dimgray">
+                <th style="width: 90%;"></th>
+                <th style="width: 15%">Có</th>
+                <th style="width: 15%">Không</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td >Đến trang trại chăn nuôi/ chợ buôn bán động vật/ cơ sở giết mổ động vật/ tiếp xúc động vật<span>(*)</span></td>
+                <td> <input type="radio" th:field="${person.history.denGan}" value="true" ></td>
+                <td> <input type="radio" th:field="${person.history.denGan}" value="false" ></td>
+            </tr>
+            <tr>
+                <td >Tiếp xúc gần (<2m) với người mắc bệnh viêm đường hô hấp do nCoV<span>(*)</span></td>
+                <td> <input type="radio" th:field="${person.history.tiepXuc}" value="true" ></td>
+                <td> <input type="radio" th:field="${person.history.tiepXuc}" value="false" ></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <span>
+            Dữ liệu bạn cung cấp hoàn toàn bảo mật và chỉ phục vụ cho việc phòng chống dịch, thuộc quản lý của
+            Ban chỉ đạo quốc gia về Phòng chống dịch Codvid-19.
+        </span><br>
+        <span>
+            Khi bạn nhất nút "Gửi" là bạn đã hiểu và đồng ý.
+        </span>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 text-center">
+        <input  class="btn btn-success" type="submit" value="Gửi tờ khai">
+    </div>
+</div>
+</form>
+
+
+<script src="/assert/jquery/jquery-3.5.1.min.js"></script>
+<script src="/assert/bootstrap413/js/popper.min.js"></script>
+<script src="/assert/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/assert/datatables/js/dataTables.bootstrap4.min.js"></script>
+<script src="/assert/bootstrap413/js/bootstrap.min.js"></script>
+<script src="/assert/bootstrap413/js/bootstrap.bundle.js"></script>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
+</body>
+</html>
