@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View Blog</title>
+</head>
+<body>
+<h1>View Blog</h1>
+<a href="/blog/"><h1>Blog list</h1></a>
+<form  action="/blog/" th:object="${blog}" method="get">
+    <input type="hidden" th:field="${blog.id}"/>
+    <table>
+        <tr>
+            <td style="font-size: xx-large;color: blue" th:text="${blog.title}"> </td>
+        </tr>
+        <tr>
+            <td style="font-size: large" th:text="${blog.head}">
+            </td>
+        </tr>
+        <tr>
+            <td th:text="${blog.body}"> </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center">
+                <input style="background-color: blue" type="submit" value="Back"></td>
+        </tr>
+    </table>
+
+</form>
+</body>
+</html>

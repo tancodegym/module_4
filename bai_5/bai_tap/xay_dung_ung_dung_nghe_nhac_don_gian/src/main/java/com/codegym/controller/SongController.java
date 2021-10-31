@@ -71,10 +71,7 @@ public class SongController {
     @GetMapping("/delete/{id}")
     public ModelAndView delete(@PathVariable int id ) {
         iSongService.remove(id);
-
-
-        ModelAndView modelAndView = new ModelAndView("/create");
-        modelAndView.addObject("songForm", new SongForm());
+        ModelAndView modelAndView = new ModelAndView("/index");
         return modelAndView;
     }
     @GetMapping("/edit/{id}")
