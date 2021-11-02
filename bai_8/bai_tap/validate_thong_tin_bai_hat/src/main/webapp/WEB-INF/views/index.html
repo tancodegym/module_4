@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Form</title>
+</head>
+<body>
+<form th:object="${newSong}" th:action="@{/validateSong}" method="post" >
+    <table>
+        <tr>
+            <td>Song Name:</td>
+            <td><input th:field="*{name}"></td>
+            <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td>
+        </tr>
+        <tr>
+            <td>Singger:</td>
+            <td><input th:field="*{singger}"></td>
+            <td th:if="${#fields.hasErrors('singger')}" th:errors="*{singger}">Singger Error</td>
+        </tr>
+        <tr>
+            <td>Type of Song:</td>
+            <td><input th:field="*{typeOfSong}"></td>
+            <td th:if="${#fields.hasErrors('typeOfSong')}" th:errors="*{typeOfSong}">Type Error</td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit">Submit</button>
+            </td>
+        </tr>
+    </table>
+</form>
+<table>
+    <tr>
+        <th>Song Name</th>
+        <th>Singger</th>
+        <th>Type</th>
+        <th>Edit</th>
+    </tr>
+    <tr th:each="song:${songList}">
+        <td th:text="${song.name}"></td>
+        <td th:text="${song.singger}"></td>
+        <td th:text="${song.typeOfSong}"></td>
+<!--        th:href="@{/edit-customer/__${customer.id}__ }"-->
+        <td><a th:href="@{/edit/{name}(name=${song.name})}">Edit</a></td>
+    </tr>
+</table>
+</body>
+</html>
