@@ -11,6 +11,8 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="/assert/bootstrap413/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assert/datatables/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 </head>
 <body>
 <div class="row " th:fragment="navbar">
@@ -34,23 +36,26 @@
                         <a class="nav-link" href="/customer">Customer</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/service?action=service">Service</a>
+                        <a class="nav-link" href="/service">Service</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            Contract
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/contract?action=contract">Contract List</a>
-                            <a class="dropdown-item" href="/contract_detail?action=contract_detailt">Contract Detail
-                                List</a>
-                            <%--                            <div class="dropdown-divider"></div>--%>
-                            <a class="dropdown-item" href="/customer_using?action=customer_using">List of Customer Using
-                                Service</a>
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contract">Contract</a>
                     </li>
+<!--                    <li class="nav-item dropdown">-->
+<!--                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"-->
+<!--                           data-toggle="dropdown"-->
+<!--                           aria-haspopup="true" aria-expanded="false">-->
+<!--                            Contract-->
+<!--                        </a>-->
+<!--                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--                            <a class="dropdown-item" href="/contract?action=contract">Contract List</a>-->
+<!--                            <a class="dropdown-item" href="/contract_detail?action=contract_detailt">Contract Detail-->
+<!--                                List</a>-->
+<!--                            <%&#45;&#45;                            <div class="dropdown-divider"></div>&#45;&#45;%>-->
+<!--                            <a class="dropdown-item" href="/customer_using?action=customer_using">List of Customer Using-->
+<!--                                Service</a>-->
+<!--                        </div>-->
+<!--                    </li>-->
 
                 </ul>
                 <form class="form-inline my-2 my-lg-0">

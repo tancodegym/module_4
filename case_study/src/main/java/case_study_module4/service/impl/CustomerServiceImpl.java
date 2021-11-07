@@ -1,7 +1,8 @@
-package case_study_module4.service;
+package case_study_module4.service.impl;
 
 import case_study_module4.model.Customer;
 import case_study_module4.repository.ICustomerRepository;
+import case_study_module4.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,11 @@ import java.util.List;
 public class CustomerServiceImpl implements ICustomerService {
     @Autowired
     ICustomerRepository iCustomerRepository;
+
+    @Override
+    public Iterable<Customer> findAll() {
+        return iCustomerRepository.findAll();
+    }
 
     @Override
     public Page<Customer> findAll(Pageable pageable) {
@@ -43,6 +49,36 @@ public class CustomerServiceImpl implements ICustomerService {
     public void update(Customer customer) {
         iCustomerRepository.save(customer);
     }
+
+    @Override
+    public void deleteAllId(String allIdCustomer) {
+        List<Long> idList = getListId(allIdCustomer);
+        for(Long id: idList){
+            iCustomerRepository.deleteById(id);
+        }
+    }
+
+    @Override
+    public Page<Customer> searchAll(Pageable pageable, String code, String name, String birthDay, String gender, String idCard, String email, String phone, String address, String typeCustomer) {
+//        return null;
+        return iCustomerRepository.searchAll(pageable,"%"+code+"%","%"+name+"%","%"+birthDay+"%","%"+gender+"%","%"+idCard+"%","%"+email+"%","%"+phone+"%","%"+address+"%","%"+typeCustomer+"%");
+    }
+
+    private List<Long> getListId(String listId){
+        List<Long> idList = new ArrayList<>();
+        String[] arrayId = listId.split(",");
+        for (String string : arrayId) {
+            if(string.equals("")){
+                continue;
+            }
+            idList.add(Long.valueOf(string));
+        }
+        return idList;
+    }
+
+
+
+
 
     private String getCustomerCode() {
         String code = "KH-";

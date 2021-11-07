@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/customer/layout :: head">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div th:replace="/customer/layout :: navbar">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2 bg-info">
+            <h1>LEFT BODY</h1>
+            <h1>LEFT BODY</h1>
+            <h1>LEFT BODY</h1>
+            <h1>LEFT BODY</h1>
+            <h1>LEFT BODY</h1>
+        </div>
+        <div class="col-10">
+            <div class="row">
+                <div class="col-12">
+                    <a class="nav-link" href="/contract">
+                        <button class="btn btn-outline-success">Back to Contract Page</button>
+                    </a>
+                    <span class="text-success" th:if="${success}" th:text="${success}"></span>
+                    <h2 class="text-center text-primary">EDIT CONTRACT</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <form th:action="@{/contract/edit}" th:object="${contractEdit}" method="post" >
+                        <input type="hidden" th:field="*{id}">
+                        <div class="mb-2">
+                            <label for="startDate" class="form-label">Start Date</label>
+                            <input type="date" class="form-control" id="startDate" th:field="*{startDate}" >
+                        </div>
+                        <div class="mb-2">
+                            <label for="endDate" class="form-label">End Date</label>
+                            <input type="date" class="form-control" id="endDate" th:field="*{endDate}" >
+                        </div>
+                        <div class="mb-2">
+                            <label for="deposit" class="form-label">Deposit</label>
+                            <input type="number" class="form-control" id="deposit" th:field="*{deposit}" >
+                        </div>
+                        <div class="mb-2">
+                            <label for="totalMoney" class="form-label">Total Money</label>
+                            <input type="number" class="form-control" id="totalMoney" th:field="*{totalMoney}" >
+                        </div>
+                        <div class="mb-2">
+                            <label for="employee"  class="form-label">Employee</label><br>
+                            <select id="employee" class="form-control" th:field="*{employee}">
+                                <option th:each="emp:${employeeList}" th:value="${emp.id}" th:text="${emp.name}"></option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label for="customer"  class="form-label">Customer</label><br>
+                            <select id="customer" class="form-control" th:field="*{customer}">
+                                <option th:each="customer:${customerList}" th:value="${customer.id}" th:text="${customer.name}"></option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label for="service"  class="form-label">Service</label><br>
+                            <select id="service" class="form-control" th:field="*{service}">
+                                <option th:each="service:${serviceList}" th:value="${service.id}" th:text="${service.name}"></option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="/customer/layout :: script">
+</div>
+</body>
+</html>

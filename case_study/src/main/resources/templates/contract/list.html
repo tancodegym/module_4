@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/customer/layout :: head">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 ">
+            <div th:replace="/customer/layout :: navbar">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-2">
+                    <a class="nav-link" href="/contract/create">
+                        <button class="btn btn-outline-success"><i class="far fa-plus-square"></i> Add Contract</button>
+                    </a>
+                </div>
+                <div class="col-8 text-center">
+                    <span class="text-success" th:if="${success}" th:text="${success}"></span>
+                </div>
+                <div class="col-2 text-right">
+                    <a class="nav-link">
+                        <button type="button" class="btn btn-outline-primary"
+                                data-toggle="modal" data-target="#modalSearch">Search <i class="fas fa-search"></i>
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table table-striped table-inverse table-responsive"
+                       style="display: inline-block; width: 100%; overflow-x: auto">
+                    <thead class="thead-inverse">
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Deposit</th>
+                        <th>Total Money</th>
+                        <th>Employee</th>
+                        <th>Customer</th>
+                        <th>Service</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                        <th>Select</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="contract,index:${contractList}">
+
+                        <td th:text="${contract.id}"></td>
+                        <td th:text="${contract.startDate}"></td>
+                        <td th:text="${contract.endDate}">
+                        <td th:text="${contract.deposit}">
+                        <td th:text="${contract.totalMoney}">
+                        <td th:text="${contract.employee.name}">
+                        <td th:text="${contract.customer.name}">
+                        <td th:text="${contract.service.name}">
+                        <td>
+                            <a th:href="@{/contract/edit/{id}(id=${contract.id})}">
+                                <button class="btn btn-primary" type="button">Edit <i class="far fa-edit"></i>
+                                </button>
+                            </a>
+                        </td>
+                        <td>
+                            <button th:onclick="|onDelete('${contract.id}')|" type="button" class="btn btn-danger"
+                                    data-toggle="modal" data-target="#modelId">Delete <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                        <td><input type="checkbox" class="Contract" th:value="${contract.id}"></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link"  th:if="${contractList.hasPrevious()}" th:href="@{'/contract'(page=${contractList.number - 1})}">Previous</a></li>
+                            <li class="page-item"><a class="page-link" th:href="@{'/contract'(page=${contractList.number })}"><span th:text="${contractList.number + 1}"></span>/<span th:text="${contractList.totalPages +1}"></span></a></li>
+                            <li class="page-item"><a class="page-link"  th:href="@{'/contract'(page=${contractList.number +1 })}"><span  th:text="${contractList.number + 2}"></span></a></li>
+                            <li class="page-item"><a class="page-link" th:href="@{'/contract'(page=${contractList.number +2 })}"><span  th:text="${contractList.number + 3}"></span></a></li>
+                            <li class="page-item"><a class="page-link" th:href="@{'/contract'(page=${contractList.number + 1})}">Next</a></li>
+                            <li class="page-item"><a class="page-link" th:href="@{'/contract'(page=${contractList.totalPages})}">Last Page</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-6 text-right">
+                    <a class="nav-link">
+                        <button onclick="getAllId()" type="button" class="btn btn-outline-danger"
+                                data-toggle="modal" data-target="#modalDeleteAll">Delete All Selected Contracts <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal DELETE -->
+    <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/contract/delete">
+                    <!--                    <input type="hidden" name="action" value="delete">-->
+                    <input type="hidden" name="idContract" id="idContract">
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            Are you sure to delete ?
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal DELETE ALL-->
+    <div class="modal fade" id="modalDeleteAll" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/contract/deleteAll">
+                    <input type="hidden" name="action" value="deleteAll">
+                    <input type="hidden" name="allIdContract" value="" id="allIdContract">
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            Are you sure to delete all selected contracts?
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<!--     Modal Search-->
+<!--    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"-->
+<!--         aria-hidden="true">-->
+<!--        <div class="modal-dialog" role="document">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                    <h5 class="modal-title text-center text-primary">Form Search</h5>-->
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                        <span aria-hidden="true">&times;</span>-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--                <form action="/service/search">-->
+<!--                    <input type="search" name="code" placeholder="Search by id" class="form-control"><br>-->
+<!--                    <input type="search" name="name" placeholder="Search by name" class="form-control"><br>-->
+<!--                    -->
+
+<!--&lt;!&ndash;                    <select class="form-control" name="typeCustomer">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <option selected value="">Search by type of customer</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <option th:each="type:${customertypies}" th:value="${type.id}"&ndash;&gt;-->
+<!--&lt;!&ndash;                                th:text="${type.name}"></option>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </select>&ndash;&gt;-->
+<!--                    <div class="modal-footer">-->
+<!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--                        <button type="submit" class="btn btn-primary">Search</button>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+</div>
+<div th:replace="/customer/layout :: script">
+</div>
+
+<script>
+    function onDelete(id) {
+        document.getElementById("idContract").value = id;
+    }
+    function getAllId() {
+        document.getElementById("allIdContract").value = "";
+        let array = [];
+        let checkboxes = document.querySelectorAll('input[type=checkbox]:checked');
+        for (let i = 0; i < checkboxes.length; i++) {
+            array.push(checkboxes[i].value);
+        }
+        for (let i = 0; i < array.length; i++) {
+            document.getElementById("allIdContract").value += "," + array[i];
+        }
+    }
+    $('#exampleModal').on('show.bs.modal', event => {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+    });
+</script>
+
+</body>
+</html>

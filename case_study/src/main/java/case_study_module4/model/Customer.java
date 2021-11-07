@@ -3,6 +3,7 @@ package case_study_module4.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "customer")
@@ -23,7 +24,8 @@ public class Customer {
     @ManyToOne
     @JoinColumn(name = "customerType_id", referencedColumnName = "id")
     private CustomerType customerType;
-
+    @OneToMany(mappedBy = "customer")
+    private List<Contract> contractList;
     public Customer() {
     }
 
@@ -37,6 +39,19 @@ public class Customer {
         this.email = email;
         this.address = address;
         this.customerType = customerType;
+    }
+
+    public Customer(String code, String name, String birthDate, int gender, String idCard, String phone, String email, String address, CustomerType customerType, List<Contract> contractList) {
+        this.code = code;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.gender = gender;
+        this.idCard = idCard;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.customerType = customerType;
+        this.contractList = contractList;
     }
 
     public Long getId() {
@@ -117,5 +132,13 @@ public class Customer {
 
     public void setCustomerType(CustomerType customerType) {
         this.customerType = customerType;
+    }
+
+    public List<Contract> getContractList() {
+        return contractList;
+    }
+
+    public void setContractList(List<Contract> contractList) {
+        this.contractList = contractList;
     }
 }
