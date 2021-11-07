@@ -15,6 +15,12 @@ import java.util.List;
 public class ContractServiceImpl implements IContractService {
     @Autowired
     IContractRepository iContractRepository;
+
+    @Override
+    public Iterable<Contract> findAll() {
+        return iContractRepository.findAll();
+    }
+
     @Override
     public Page<Contract> findAll(Pageable pageable) {
         return iContractRepository.findAll(pageable);

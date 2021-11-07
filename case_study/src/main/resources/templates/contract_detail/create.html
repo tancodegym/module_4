@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/customer/layout :: head">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div th:replace="/customer/layout :: navbar">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2 bg-info">
+            <h1>LEFT BODY</h1>
+            <h1>LEFT BODY</h1>
+            <h1>LEFT BODY</h1>
+            <h1>LEFT BODY</h1>
+            <h1>LEFT BODY</h1>
+        </div>
+        <div class="col-10">
+            <div class="row">
+                <div class="col-12">
+                    <a class="nav-link" href="/contractDetail/">
+                        <button class="btn btn-outline-success">Back to Contract Detail Page</button>
+                    </a>
+                    <span class="text-success" th:if="${success}" th:text="${success}"></span>
+                    <h2 class="text-center text-primary">CREATE CONTRACT DETAIL</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <form th:action="@{/contractDetail/create}" th:object="${contractDetailCreate}" method="post" >
+                        <div class="mb-2">
+                            <label for="contractId"  class="form-label">Contract ID</label><br>
+                            <select id="contractId" class="form-control" th:field="*{contract}">
+                                <option th:each="i:${contractList}" th:value="${i.id}" th:text="${i.id}"></option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label for="attachService"  class="form-label">Attach Service ID</label><br>
+                            <select id="attachService" class="form-control" th:field="*{attachService}">
+                                <option th:each="i:${attachServices}" th:value="${i.id}" th:text="${i.id}"></option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label for="quantity" class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" th:field="*{quantity}" >
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="/customer/layout :: script">
+</div>
+</body>
+</html>

@@ -1,6 +1,7 @@
 package case_study_module4.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Contract {
@@ -22,6 +23,8 @@ public class Contract {
     @ManyToOne
     @JoinColumn(name = "service", referencedColumnName = "id")
     private Service service;
+    @OneToMany(mappedBy = "contract")
+    private List<ContractDetail> contractDetailList;
 
     public Contract() {
     }
@@ -36,12 +39,31 @@ public class Contract {
         this.service = service;
     }
 
+    public Contract(String startDate, String endDate, double deposit, double totalMoney, Customer customer, Employee employee, Service service, List<ContractDetail> contractDetailList) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.deposit = deposit;
+        this.totalMoney = totalMoney;
+        this.customer = customer;
+        this.employee = employee;
+        this.service = service;
+        this.contractDetailList = contractDetailList;
+    }
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<ContractDetail> getContractDetailList() {
+        return contractDetailList;
+    }
+
+    public void setContractDetailList(List<ContractDetail> contractDetailList) {
+        this.contractDetailList = contractDetailList;
     }
 
     public String getStartDate() {
