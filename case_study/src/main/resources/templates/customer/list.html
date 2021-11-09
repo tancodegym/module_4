@@ -82,7 +82,7 @@
                     <tr th:each="cus,index:${customerList}">
 
                         <td th:text="${cus.code}"></td>
-                        <td th:text="${cus.name}"></td>
+                        <td  th:text="${cus.name}"></td>
                         <td th:text="${cus.birthDate}">
                             <!--Gender-->
                         <td th:if="${cus.gender==0}" th:text="Male"></td>
@@ -230,8 +230,10 @@
 </div>
 
 <script>
-    function onDelete(id) {
+    function onDelete(id,name) {
+        alert(document.getElementById("KH-0001").value);
         document.getElementById("idCustomer").value = id;
+
     }
     function getAllId() {
         document.getElementById("allIdCustomer").value = "";

@@ -1,7 +1,11 @@
 package case_study_module4.controller;
 
+import case_study_module4.dto.CustomerDetail;
+import case_study_module4.dto.CustomerInUsing;
 import case_study_module4.model.Customer;
 import case_study_module4.model.CustomerType;
+import case_study_module4.service.ICustomerDetailService;
+import case_study_module4.service.ICustomerInUsingService;
 import case_study_module4.service.ICustomerService;
 import case_study_module4.service.ICustomerTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
@@ -20,6 +26,10 @@ public class CustomerController {
     ICustomerService iCustomerService;
     @Autowired
     ICustomerTypeService iCustomerTypeService;
+    @Autowired
+    ICustomerInUsingService iCustomerInUsingService;
+    @Autowired
+    ICustomerDetailService iCustomerDetailService;
 
     @ModelAttribute("customertypies")
     public Iterable<CustomerType> getType() {
@@ -30,6 +40,7 @@ public class CustomerController {
     public String showIndex(@PageableDefault(value = 5, sort = "code", direction = Sort.Direction.ASC) Pageable pageable, Model model) {
         Page<Customer> customerList = iCustomerService.findAll(pageable);
         model.addAttribute("customerList", customerList);
+
         return "/customer/list";
     }
 
@@ -87,19 +98,35 @@ public class CustomerController {
                          @RequestParam(value = "phone", defaultValue = "", required = false) String phone,
                          @RequestParam(value = "address", defaultValue = "", required = false) String address,
                          @RequestParam(value = "typeCustomer", defaultValue = "", required = false) String typeCustomer,
-                         Model model,@PageableDefault(value = 5, sort = "code", direction = Sort.Direction.ASC) Pageable pageable
-                         ) {
-        Page<Customer> customerList = iCustomerService.searchAll(pageable,code,name,birthDay,gender,idCard,email,phone,address,typeCustomer);
+                         Model model, @PageableDefault(value = 5, sort = "code", direction = Sort.Direction.ASC) Pageable pageable
+    ) {
+        Page<Customer> customerList = iCustomerService.searchAll(pageable, code, name, birthDay, gender, idCard, email, phone, address, typeCustomer);
         model.addAttribute("customerList", customerList);
-        model.addAttribute("code",code);
-        model.addAttribute("name",name);
-        model.addAttribute("birthDay",birthDay);
-        model.addAttribute("gender",gender);
-        model.addAttribute("idCard",idCard);
-        model.addAttribute("email",email);
-        model.addAttribute("phone",phone);
-        model.addAttribute("address",address);
-        model.addAttribute("typeCustomer",typeCustomer);
+        model.addAttribute("code", code);
+        model.addAttribute("name", name);
+        model.addAttribute("birthDay", birthDay);
+        model.addAttribute("gender", gender);
+        model.addAttribute("idCard", idCard);
+        model.addAttribute("email", email);
+        model.addAttribute("phone", phone);
+        model.addAttribute("address", address);
+        model.addAttribute("typeCustomer", typeCustomer);
         return "/customer/list";
+    }
+
+    @GetMapping("/customer_using")
+    public String getCustomerInUsing(Model model) {
+        List<CustomerInUsing> usingList = iCustomerInUsingService.getList();
+        model.addAttribute("usingList", usingList);
+        return "/customer/using";
+    }
+
+    @GetMapping("/detail/{id}")
+    public String getDetailCustomer(@PathVariable("id") Long id, Model model) {
+        List<CustomerDetail> customerDetailList = iCustomerDetailService.getDetailCustomer(id);
+        List<CustomerInUsing> usingList = iCustomerInUsingService.getList();
+        model.addAttribute("customerDetailList", customerDetailList);
+        model.addAttribute("usingList", usingList);
+        return "/customer/using";
     }
 }
