@@ -18,8 +18,12 @@ public interface ICustomerRepository extends JpaRepository<Customer,Long> {
     Page<Customer> searchAll(Pageable pageable, String code, String name, String birthDay, String gender,
                              String idCard, String email, String phone, String address, String typeCustomer);
 
-    @Query(value=" Call get_customer_using()",nativeQuery=true)
-    List<CustomerInUsing> getList();
+
+    @Query(value=" Call get_customer_using();",nativeQuery=true)
+    Page<CustomerInUsing> getList(Pageable pageable);
+
+
+
     @Query(value="call get_attach_service_name( :idCustomer)",nativeQuery=true)
     List<CustomerDetail> getDetailCustomer(Long idCustomer);
 

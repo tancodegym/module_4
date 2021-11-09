@@ -115,8 +115,8 @@ public class CustomerController {
     }
 
     @GetMapping("/customer_using")
-    public String getCustomerInUsing(Model model) {
-        List<CustomerInUsing> usingList = iCustomerInUsingService.getList();
+    public String getCustomerInUsing(@PageableDefault(value=5,sort = "contract",direction = Sort.Direction.ASC) Pageable pageable, Model model) {
+        Page<CustomerInUsing> usingList = iCustomerInUsingService.getList(pageable);
         model.addAttribute("usingList", usingList);
         return "/customer/using";
     }
@@ -124,9 +124,7 @@ public class CustomerController {
     @GetMapping("/detail/{id}")
     public String getDetailCustomer(@PathVariable("id") Long id, Model model) {
         List<CustomerDetail> customerDetailList = iCustomerDetailService.getDetailCustomer(id);
-        List<CustomerInUsing> usingList = iCustomerInUsingService.getList();
         model.addAttribute("customerDetailList", customerDetailList);
-        model.addAttribute("usingList", usingList);
-        return "/customer/using";
+        return "/customer/detail";
     }
 }
