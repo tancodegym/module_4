@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog Management</title>
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+</head>
+</head>
+<body>
+<h3>Blog Management</h3>
+<span th:if="${messageCreate}" th:text="${messageCreate}"></span>
+<span th:if="${success}" th:text="${success}"></span>
+<a href="/blog/create"><h1> Add New Blog</h1></a>
+<form>
+            <input placeholder="Seach by title" type="search" name="title"/>
+    <select  name="idCategory">
+        <option selected value="">Chọn</option>
+        <option th:each="p : ${categories}" th:value="${p.id}"
+                th:text="${p.name}"></option>
+    </select>
+            <td><input type="submit" value="Search"></td>
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>Number</th>
+        <th>Title of Blog</th>
+        <th>Head of Blog</th>
+        <th>Category</th>
+        <th>Date Created</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <td>View</td>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="blog,index : ${blogList}">
+        <td th:text="${index.count}"></td>
+        <td th:text="${blog.title}"></td>
+        <td th:text="${blog.head}"></td>
+        <td th:if="${blog.category}" >
+            <a th:href="@{/view-category/__${blog.category.id}__}" th:text="${blog.category.name}"></a>
+        </td>
+        <td th:text="${blog.date}"></td>
+
+
+        <td><a th:href="@{/blog/edit/{id}(id=${blog.id})}"> <button class="btn btn-primary modal-toggle">Edit</button></a></td>
+
+        <td><a th:href="@{/blog/delete/{id}(id=${blog.id})}">
+            <button class="btn btn-error modal-toggle">Delete</button>
+        </a></td>
+        <td><a th:href="@{/blog/view/{id}(id=${blog.id})}"> <button class="btn btn-success modal-toggle">View</button></a></td>
+    </tr>
+    </tbody>
+</table>
+<footer th:replace="/layout :: footer"></footer>
+<div>
+    <a th:href="@{'/blog'(page=${blogList.number - 1},search=${search},idCategory=${idCategory})}" th:if="${blogList.hasPrevious()}">Previous</a>
+    <span th:text="${blogList.number + 1}"></span>/<span th:text="${blogList.totalPages}"></span>
+    <a th:href="@{'/blog'(page=${blogList.number + 1},search=${search},idCategory=${idCategory})}" th:if="${blogList.hasNext()}">Next</a>
+</div>
+</body>
+</html>
