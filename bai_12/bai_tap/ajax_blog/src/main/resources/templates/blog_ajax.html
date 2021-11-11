@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script
+        src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous">
+
+</script>
+<head>
+    <meta charset="UTF-8">
+    <title>Blog Management</title>
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+</head>
+</head>
+<body>
+<h3>Blog Management By AJAX</h3>
+<input placeholder="Search by title" type="search" id="searchValue"/>
+<button type="button" id="buttonSearch" class="btn btn-outline-primary">Search By Title</button>
+<br>
+<button style="text-align: center" type="button" onclick="showMore()" id="showMore" class="btn btn-outline-primary">Show More Blog</button>
+<table id="show"></table>
+<table id="result">
+</table>
+<footer th:replace="/layout :: footer"></footer>
+<script>
+    var page = 0;
+    var size = 0;
+    $(document).ready(function () {
+        $('#buttonSearch').click(function (event) {
+            var t = document.getElementById("searchValue").value;
+            $.ajax({
+                headers: {
+                    'Accept': "application/json",
+                    'Content-Type': "application/json"
+                },
+                type: "GET",
+                // data: JSON.stringify(json),
+                url: "/api/search/" + t,
+                success: function (listBlog) {
+                    let content = '    <tr>\n' +
+                        '        <td>Number</td>\n' +
+                        '        <td>Title</td>\n' +
+                        '        <td>Head</td>\n' +
+                        '        <td>Body</td>\n' +
+                        '        <td>Category</td>\n' +
+                        '        <td>Date</td>\n' +
+                        '    </tr>';
+                    for (let i = 0; i < listBlog.length; i++) {
+                        content += getBlog(i+1,listBlog[i]);
+                    }
+                    document.getElementById('result').innerHTML = content;
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    })
+    var content="";
+    $.ajax({
+        headers: {
+            'Accept': "application/json",
+            'Content-Type': "application/json"
+        },
+        type: "GET",
+        // data: JSON.stringify(json),
+        url: "/api/showMore?page=0&size=1",
+        success: function (listBlog) {
+            page=listBlog.pageable.pageNumber
+            size = listBlog.pageable.pageSize
+            console.log(size)
+            console.log(listBlog)
+             content = '    <tr>\n' +
+                '        <td>Number</td>\n' +
+                '        <td>Title</td>\n' +
+                '        <td>Head</td>\n' +
+                '        <td>Body</td>\n' +
+                '        <td>Category</td>\n' +
+                '        <td>Date</td>\n' +
+                '    </tr>';
+            for (let i = 0; i < listBlog.content.length; i++) {
+                content += getBlog(i+1,listBlog.content[i]);
+            }
+            document.getElementById('show').innerHTML = content;
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    })
+
+
+    // $(document).ready(function () {
+    //     $('#showMore').click(function (event) {
+    //         page++;
+    //         console.log(page);
+    //         $.ajax({
+    //             headers: {
+    //                 'Accept': "application/json",
+    //                 'Content-Type': "application/json"
+    //             },
+    //             type: "GET",
+    //             // data: JSON.stringify(json),
+    //             url: "/api/showMore?page="+page+"&size=1",
+    //             success: function (listBlog) {
+    //                 for (let i = 0; i < listBlog.content.length; i++) {
+    //                     content += getBlog(i+1,listBlog.content[i]);
+    //                 }
+    //                 console.log(content)
+    //                 document.getElementById('show').innerHTML = content;
+    //             },
+    //             error: function (err) {
+    //                 console.log(err);
+    //             }
+    //         })
+    //     })
+    // })
+    function showMore() {
+        page++;
+        console.log(page);
+        $.ajax({
+            headers: {
+                'Accept': "application/json",
+                'Content-Type': "application/json"
+            },
+            type: "GET",
+            // data: JSON.stringify(json),
+            url: "/api/showMore?page="+page+"&size=1",
+            success: function (listBlog) {
+                for (let i = 0; i < listBlog.content.length; i++) {
+                    content += getBlog(page+1,listBlog.content[i]);
+                }
+                console.log(content)
+                document.getElementById('show').innerHTML = content;
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+
+    }
+    function getBlog(index,blog) {
+        return `<tr>
+                    <td>${index}</td>
+                    <td >${blog.title}</td>
+                    <td >${blog.head}</td>
+                    <td >${blog.body}</td>
+                    <td >${blog.category.name}</td>
+                    <td >${blog.date}</td></tr>`;
+    }
+</script>
+</body>
+</html>

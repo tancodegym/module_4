@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<head>
+    <title>List smart phone</title>
+</head>
+<body>
+
+<button style="text-align: center" type="button" id="showMore" class="btn btn-outline-primary">Show List Smart Phone
+</button>
+<table id="smartphone">
+
+</table>
+<input type="hidden"  id="phoneId"/>
+Model: <input type="text"  id="model"/> <br>
+Price: <input type="text"  id="price"/><br>
+Producer: <input type="text"  id="producer"/><br>
+<input type="button" value="Update" onclick="update()"/>
+
+
+<script>
+
+    $(document).ready(function () {
+        var cont = "";
+        $('#showMore').click(function (event) {
+            $.ajax({
+                headers: {
+                    'Accept': "application/json",
+                    'Content-Type': "application/json"
+                },
+                type: "GET",
+                // data: JSON.stringify(json),
+                url: "/api/getlistphones",
+                success: function (listPhone) {
+                    cont = '    <tr>\n' +
+                        '        <td>Number</td>\n' +
+                        '        <td>Model</td>\n' +
+                        '        <td>Price</td>\n' +
+                        '        <td>Producer</td>\n' +
+                        '        <td>Edit</td>\n' +
+                        '    </tr>';
+                    for (let i = 0; i < listPhone.length; i++) {
+                        cont += getPhone(i + 1, listPhone[i]);
+                    }
+                    console.log(cont)
+                    document.getElementById('smartphone').innerHTML = cont;
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+
+    })
+
+    function getPhone(index, phone) {
+        return `<tr>
+                    <td>${index}</td>
+                    <td >${phone.model}</td>
+                    <td >${phone.price}</td>
+                    <td >${phone.producer}</td>
+                     <td><input type='button' onclick='edit(${phone.id})' value='Edit'></td>
+                    </tr>`;
+    }
+
+    function edit(id) {
+        alert(id)
+        $.ajax({
+            headers: {
+                'Accept': "application/json",
+                'Content-Type': "application/json"
+            },
+            type: "POST",
+            // data: JSON.stringify(json),
+            url: "/api/edit/" + id,
+            success: function (phone) {
+                console.log(phone)
+                document.getElementById("phoneId").value=phone.id
+                document.getElementById("model").value=phone.model
+                document.getElementById("price").value=phone.price
+                document.getElementById("producer").value=phone.producer
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    }
+    function update() {
+        var phoneId = document.getElementById("phoneId").value;
+        var model = document.getElementById("model").value;
+        var price = document.getElementById("price").value;
+        var producer = document.getElementById("producer").value;
+
+        var json = {"id": phoneId, "producer": producer, "model": model,"price":price}
+        $.ajax({
+
+            headers: {
+                'Accept': "application/json",
+                'Content-Type': "application/json"
+            },
+            type: "POST",
+            data: JSON.stringify(json),
+            url: "/api/update",
+            success: function (phone) {
+              alert("update phone with id= "+ phone.id + "successfully !")
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    }
+
+
+
+
+
+</script>
+</body>
+</html>
