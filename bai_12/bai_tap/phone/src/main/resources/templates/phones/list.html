@@ -8,52 +8,49 @@
 </head>
 <body>
 
-<button style="text-align: center" type="button" id="showMore" class="btn btn-outline-primary">Show List Smart Phone
+<button style="text-align: center" type="button" onclick="showList()" class="btn btn-outline-primary">Show List Smart
+    Phone
 </button>
 <table id="smartphone">
 
 </table>
-<input type="hidden"  id="phoneId"/>
-Model: <input type="text"  id="model"/> <br>
-Price: <input type="text"  id="price"/><br>
-Producer: <input type="text"  id="producer"/><br>
+<input type="hidden" id="phoneId"/>
+Model: <input type="text" id="model"/> <br>
+Price: <input type="text" id="price"/><br>
+Producer: <input type="text" id="producer"/><br>
 <input type="button" value="Update" onclick="update()"/>
 
 
 <script>
-
-    $(document).ready(function () {
-        var cont = "";
-        $('#showMore').click(function (event) {
-            $.ajax({
-                headers: {
-                    'Accept': "application/json",
-                    'Content-Type': "application/json"
-                },
-                type: "GET",
-                // data: JSON.stringify(json),
-                url: "/api/getlistphones",
-                success: function (listPhone) {
-                    cont = '    <tr>\n' +
-                        '        <td>Number</td>\n' +
-                        '        <td>Model</td>\n' +
-                        '        <td>Price</td>\n' +
-                        '        <td>Producer</td>\n' +
-                        '        <td>Edit</td>\n' +
-                        '    </tr>';
-                    for (let i = 0; i < listPhone.length; i++) {
-                        cont += getPhone(i + 1, listPhone[i]);
-                    }
-                    console.log(cont)
-                    document.getElementById('smartphone').innerHTML = cont;
-                },
-                error: function (err) {
-                    console.log(err);
+    function showList() {
+        $.ajax({
+            headers: {
+                'Accept': "application/json",
+                'Content-Type': "application/json"
+            },
+            type: "GET",
+            // data: JSON.stringify(json),
+            url: "/api/getlistphones",
+            success: function (listPhone) {
+                cont = '    <tr>\n' +
+                    '        <td>Number</td>\n' +
+                    '        <td>Model</td>\n' +
+                    '        <td>Price</td>\n' +
+                    '        <td>Producer</td>\n' +
+                    '        <td>Edit</td>\n' +
+                    '    </tr>';
+                for (let i = 0; i < listPhone.length; i++) {
+                    cont += getPhone(i + 1, listPhone[i]);
                 }
-            })
+                console.log(cont)
+                document.getElementById('smartphone').innerHTML = cont;
+            },
+            error: function (err) {
+                console.log(err);
+            }
         })
 
-    })
+    }
 
     function getPhone(index, phone) {
         return `<tr>
@@ -77,23 +74,24 @@ Producer: <input type="text"  id="producer"/><br>
             url: "/api/edit/" + id,
             success: function (phone) {
                 console.log(phone)
-                document.getElementById("phoneId").value=phone.id
-                document.getElementById("model").value=phone.model
-                document.getElementById("price").value=phone.price
-                document.getElementById("producer").value=phone.producer
+                document.getElementById("phoneId").value = phone.id
+                document.getElementById("model").value = phone.model
+                document.getElementById("price").value = phone.price
+                document.getElementById("producer").value = phone.producer
             },
             error: function (err) {
                 console.log(err);
             }
         })
     }
+
     function update() {
         var phoneId = document.getElementById("phoneId").value;
         var model = document.getElementById("model").value;
         var price = document.getElementById("price").value;
         var producer = document.getElementById("producer").value;
 
-        var json = {"id": phoneId, "producer": producer, "model": model,"price":price}
+        var json = {"id": phoneId, "producer": producer, "model": model, "price": price}
         $.ajax({
 
             headers: {
@@ -104,18 +102,14 @@ Producer: <input type="text"  id="producer"/><br>
             data: JSON.stringify(json),
             url: "/api/update",
             success: function (phone) {
-              alert("update phone with id= "+ phone.id + "successfully !")
+                alert("update phone with id= " + phone.id + "successfully !")
+                showList();
             },
             error: function (err) {
                 console.log(err);
             }
         })
     }
-
-
-
-
-
 </script>
 </body>
 </html>
