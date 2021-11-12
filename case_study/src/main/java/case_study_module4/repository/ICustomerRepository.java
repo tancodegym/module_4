@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 
 import java.util.List;
@@ -25,8 +26,8 @@ public interface ICustomerRepository extends JpaRepository<Customer,Long> {
             "join contract_detail cd on cd.contract = ct.id\n" +
             "join attach_service a on a.id = cd.attach_service\n" +
             "join service s on ct.service = s.id\n" +
-            "Group by customer.id Order By ct.id",nativeQuery=true)
-    Page<CustomerInUsing> getList(Pageable pageable);
+            "Group by customer.id Order By ct.id limit :page,:size",nativeQuery=true)
+    List<CustomerInUsing> getList(@Param("page") int page, @Param("size") int size);
 
 
 

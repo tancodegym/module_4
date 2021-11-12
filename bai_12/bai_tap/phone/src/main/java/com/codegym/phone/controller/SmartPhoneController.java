@@ -23,7 +23,6 @@ public class SmartPhoneController {
 
     @GetMapping("")
     public ModelAndView returnList() {
-
         return new ModelAndView("/phones/list");
     }
 

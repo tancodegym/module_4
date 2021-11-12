@@ -15,8 +15,8 @@ public class CustomerInUsingServiceImpl implements ICustomerInUsingService {
     @Autowired
     ICustomerRepository iCustomerRepository;
     @Override
-    public Page<CustomerInUsing> getList(Pageable pageable) {
-        Page<CustomerInUsing> customerInUsingPage= iCustomerRepository.getList(pageable);
+    public List<CustomerInUsing> getList(int page,int size) {
+        List<CustomerInUsing> customerInUsingPage= iCustomerRepository.getList(page,size);
         System.out.println(customerInUsingPage.toString());
         return customerInUsingPage;
     }

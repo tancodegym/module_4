@@ -15,9 +15,9 @@
           integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
 </head>
-<body>
+<body onload="showList()">
 
-<button style="text-align: center" type="button" onclick="showList()" class="btn btn-outline-primary">Show List Smart
+<button style="text-align: center" type="button"  class="btn btn-outline-primary">Show List Smart
     Phone
 </button>
 <table id="smartphone" class="table table-striped table-inverse table-responsive">
@@ -40,9 +40,9 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" id="phoneId"/>
-                Model: <input type="text" id="model"/> <br>
-                Price: <input type="text" id="price"/><br>
-                Producer: <input type="text" id="producer"/><br>
+                Model: <input class="form-control" type="text" id="model"/> <br>
+                Price: <input class="form-control" type="text" id="price"/><br>
+                Producer: <input class="form-control" type="text" id="producer"/><br>
             </div>
             <div class="modal-footer">
                 <button type="button" onclick="closeModal()" class="btn btn-secondary" data-dismiss="modal">Close</button>

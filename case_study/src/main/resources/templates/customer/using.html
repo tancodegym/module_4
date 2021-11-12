@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <head th:replace="/customer/layout :: head">
+
 </head>
 <body>
 <div class="container-fluid">
@@ -33,6 +37,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="user,index:${usingList}">
+                        <input type="hidden" id="customerId" th:value="${user.getCustomerid()}">
                         <td th:text="${user.getContract()}"></td>
                         <td th:text="${user.getCustomercode()}"></td>
                         <td th:text="${user.getCustomername()}"></td>
@@ -40,13 +45,13 @@
                         <!--                        <td th:text="${user.getQuantity()}"></td>-->
                         <td th:text="${user.getTotal()}"></td>
                         <td>
-                            <a th:href="@{/customer/detail/{id}(id=${user.getCustomerid()})}">
-                                <button  class="btn btn-primary" type="button">Detail <i class="fas fa-eye"></i>
-                                </button>
-                            </a>
+                            <!--                            <a th:href="@{/customer/detail/{id}(id=${user.getCustomerid()})}">-->
+                            <button onclick="showDetail()"
+                                    class="btn btn-primary" type="button">Detail <i class="fas fa-eye"></i>
+                            </button>
+                            <!--                            </a>-->
                         </td>
                     </tr>
-
                     </tbody>
                 </table>
 
@@ -54,11 +59,60 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-6">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" th:if="${page}!=0"
+                                         th:href="@{'/customer/customer_using'(page=${page}-1)}">Previous</a></li>
+                <li class="page-item"><a class="page-link" th:href="@{'/customer/customer_using'(page=${page })}"><span
+                        th:text="${page}+1"></span>/<span th:text="${total}"></span></a></li>
+                <li class="page-item"><a class="page-link" th:if="${page}<${total}"
+                                         th:href="@{'/customer/customer_using'(page=${page} +1)}">Next</a></li>
+                <li class="page-item"><a class="page-link" th:href="@{'/customer/customer_using'(page=${total})}">Last
+                    Page</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-6"></div>
+</div>
 
 
 <div th:replace="/customer/layout :: script">
 </div>
+<script>
+    function showDetail() {
+        let id = document.getElementById("customerId").value
+        alert(id)
+        $.ajax({
+            headers: {
+                'Accept': "application/json",
+                'Content-Type': "application/json"
+            },
+            type: "GET",
+            // data: JSON.stringify(json),
+            url: "/customer/detail/"+id,
+            success: function (listPhone) {
+                cont = '    <tr>\n' +
+                    '        <td>Number</td>\n' +
+                    '        <td>Model</td>\n' +
+                    '        <td>Price</td>\n' +
+                    '        <td>Producer</td>\n' +
+                    '        <td>Edit</td>\n' +
+                    '    </tr>';
+                for (let i = 0; i < listPhone.length; i++) {
+                    cont += getPhone(i + 1, listPhone[i]);
+                }
+                console.log(cont)
+                document.getElementById('smartphone').innerHTML = cont;
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
 
+    }
+</script>
 
 </body>
 </html>

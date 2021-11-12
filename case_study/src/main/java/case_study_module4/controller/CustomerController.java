@@ -10,6 +10,7 @@ import case_study_module4.service.ICustomerService;
 import case_study_module4.service.ICustomerTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -115,9 +116,17 @@ public class CustomerController {
     }
 
     @GetMapping("/customer_using")
-    public String getCustomerInUsing(@PageableDefault(value=5) Pageable pageable, Model model) {
-        Page<CustomerInUsing> usingList = iCustomerInUsingService.getList(pageable);
+    public String getCustomerInUsing(@RequestParam(value = "page",defaultValue = "0") int page, Model model) {
+        List<CustomerInUsing> totalpage = iCustomerInUsingService.getList(0,9999); //viet method #
+        int size =2;
+        int total= (totalpage.size()+1)/size;
+        int page1= page*size;
+
+        List<CustomerInUsing> usingList = iCustomerInUsingService.getList(page1,size);
+
         model.addAttribute("usingList", usingList);
+        model.addAttribute("page",page);
+        model.addAttribute("total",total);
         return "/customer/using";
     }
 
