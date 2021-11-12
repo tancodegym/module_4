@@ -115,7 +115,7 @@ public class CustomerController {
     }
 
     @GetMapping("/customer_using")
-    public String getCustomerInUsing(@PageableDefault(value=5,sort = "contract",direction = Sort.Direction.ASC) Pageable pageable, Model model) {
+    public String getCustomerInUsing(@PageableDefault(value=5) Pageable pageable, Model model) {
         Page<CustomerInUsing> usingList = iCustomerInUsingService.getList(pageable);
         model.addAttribute("usingList", usingList);
         return "/customer/using";

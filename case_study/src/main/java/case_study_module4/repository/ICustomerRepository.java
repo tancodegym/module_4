@@ -19,7 +19,13 @@ public interface ICustomerRepository extends JpaRepository<Customer,Long> {
                              String idCard, String email, String phone, String address, String typeCustomer);
 
 
-    @Query(value=" Call get_customer_using();",nativeQuery=true)
+    @Query(value="  Select ct.id as contract,s.`code` as service, customer.`code` as customercode,customer.`name` as customername,\n" +
+            "cd.quantity as quantity,SUM(s.cost + coalesce(a.cost*cd.quantity,0)) as total, customer.id as customerid\n" +
+            "from customer join contract ct on customer.id = ct.customer\n" +
+            "join contract_detail cd on cd.contract = ct.id\n" +
+            "join attach_service a on a.id = cd.attach_service\n" +
+            "join service s on ct.service = s.id\n" +
+            "Group by customer.id Order By ct.id",nativeQuery=true)
     Page<CustomerInUsing> getList(Pageable pageable);
 
 

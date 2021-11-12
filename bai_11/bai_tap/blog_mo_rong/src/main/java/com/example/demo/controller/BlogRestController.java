@@ -76,9 +76,10 @@ public class BlogRestController {
     //page: số trang hiện tại
     // size: số record trả về
     //PageRequest.of() trả về 1 đối tượng Pageable
-    @GetMapping("/blog/getPage")
-    public ResponseEntity<Page<Blog>> getPage( @RequestParam int page,int size) {
-        Page<Blog> blogList = iBlogService.findAll(PageRequest.of(page,size));
+    @GetMapping("/blog/getPage") // /blog/getPage?page=0&size=1
+    public ResponseEntity<Page<Blog>> getPage( @RequestParam int page,int size
+                                              ) {
+        Page<Blog> blogList = iBlogService.findAll(PageRequest.of(page,size)); // Pageable pageable
         return   new ResponseEntity<>(blogList, HttpStatus.OK);
     }
     //tìm kiếm bằng web service
