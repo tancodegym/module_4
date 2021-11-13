@@ -7,4 +7,5 @@ public interface CustomerDetail {
     String getAttachservice();
     Long getIdcd();
     Integer getCost();
+    Integer getQuantity();
 }

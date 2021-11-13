@@ -14,6 +14,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -131,9 +133,10 @@ public class CustomerController {
     }
 
     @GetMapping("/detail/{id}")
-    public String getDetailCustomer(@PathVariable("id") Long id, Model model) {
+    public ResponseEntity<?> getDetailCustomer(@PathVariable("id") Long id) {
         List<CustomerDetail> customerDetailList = iCustomerDetailService.getDetailCustomer(id);
-        model.addAttribute("customerDetailList", customerDetailList);
-        return "/customer/detail";
+//        model.addAttribute("customerDetailList", customerDetailList);
+
+        return  new ResponseEntity<>(customerDetailList, HttpStatus.OK);
     }
 }

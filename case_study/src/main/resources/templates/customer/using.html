@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <head th:replace="/customer/layout :: head">
 
@@ -37,7 +36,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="user,index:${usingList}">
-                        <input type="hidden" id="customerId" th:value="${user.getCustomerid()}">
+<!--                        <input type="hidden" th:id="${index.count}" th:value="${user.getCustomerid()}">-->
                         <td th:text="${user.getContract()}"></td>
                         <td th:text="${user.getCustomercode()}"></td>
                         <td th:text="${user.getCustomername()}"></td>
@@ -46,7 +45,7 @@
                         <td th:text="${user.getTotal()}"></td>
                         <td>
                             <!--                            <a th:href="@{/customer/detail/{id}(id=${user.getCustomerid()})}">-->
-                            <button onclick="showDetail()"
+                            <button th:onclick="|showDetail(${user.getCustomerid()})|"
                                     class="btn btn-primary" type="button">Detail <i class="fas fa-eye"></i>
                             </button>
                             <!--                            </a>-->
@@ -78,11 +77,33 @@
 </div>
 
 
+
+<!-- Modal -->
+<div class="modal fade" id="detail" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">List Attach Service Of Customer Have Name:
+                <span id="customerName"> </span></h5>
+                <button type="button" onclick="closeModal()" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="tableDetail" class="table table-striped table-inverse table-responsive">
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="closeModal()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div th:replace="/customer/layout :: script">
 </div>
 <script>
-    function showDetail() {
-        let id = document.getElementById("customerId").value
+    function showDetail(id) {
         alert(id)
         $.ajax({
             headers: {
@@ -92,25 +113,41 @@
             type: "GET",
             // data: JSON.stringify(json),
             url: "/customer/detail/"+id,
-            success: function (listPhone) {
-                cont = '    <tr>\n' +
+            success: function (customer) {
+                console.log(customer)
+                let cont= '    <tr>\n' +
                     '        <td>Number</td>\n' +
-                    '        <td>Model</td>\n' +
+                    '        <td>Attach Service</td>\n' +
+                    '        <td>Quantity</td>\n' +
                     '        <td>Price</td>\n' +
-                    '        <td>Producer</td>\n' +
-                    '        <td>Edit</td>\n' +
                     '    </tr>';
-                for (let i = 0; i < listPhone.length; i++) {
-                    cont += getPhone(i + 1, listPhone[i]);
+                for (let i = 0; i < customer.length; i++) {
+                    cont +=getDetail(i,customer[i])
+                    console.log(customer[i].attachservice)
                 }
-                console.log(cont)
-                document.getElementById('smartphone').innerHTML = cont;
+                document.getElementById("customerName").innerHTML= customer[0].customername
+                document.getElementById("tableDetail").innerHTML = cont
+                $('#detail').modal('show');
+
+                    console.log(customer)
             },
             error: function (err) {
                 console.log(err);
             }
         })
+    }
+    function closeModal() {
+        $('#detail').modal('hide');
 
+    }
+    function getDetail(index, customer) {
+        return `<tr>
+                    <td>${index +1}</td>
+                    <td >${customer.attachservice}</td>
+                    <td >${customer.quantity}</td>
+                    <td >${customer.cost}</td>
+
+                    </tr>`;
     }
 </script>
 
