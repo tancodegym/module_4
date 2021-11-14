@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/customer/layout :: head">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div th:replace="/customer/layout :: navbar">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2 bg-info">
+            <h1>LEFT BODY</h1>
+            <h1>LEFT BODY</h1>
+            <h1>LEFT BODY</h1>
+            <h1>LEFT BODY</h1>
+            <h1>LEFT BODY</h1>
+        </div>
+        <div class="col-10">
+            <div class="row">
+                <div class="col-12">
+                    <a class="nav-link" href="/service">
+                        <button class="btn btn-outline-success">Back to Service Page</button>
+                    </a>
+                    <span class="text-success" th:if="${success}" th:text="${success}"></span>
+                    <h2 class="text-center text-primary">CREATE SERVICE</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <form th:action="@{/service/create}" th:object="${serviceCreate}" method="post" >
+                        <div class="mb-2">
+                            <label for="name" class="form-label">Service Name</label>
+                            <input type="text" class="form-control" id="name" th:field="*{name}" >
+                        </div>
+                        <div class="mb-2">
+                            <label for="area" class="form-label">Area</label>
+                            <input type="number" class="form-control" id="area" th:field="*{area}" >
+                        </div>
+                        <div class="mb-2">
+                            <label for="cost" class="form-label">Cost</label>
+                            <input type="number" class="form-control" id="cost" th:field="*{cost}" >
+                        </div>
+                        <div class="mb-2">
+                            <label for="maxPeople" class="form-label">Number or Max People</label>
+                            <input type="number" class="form-control" id="maxPeople" th:field="*{maxPeople}" >
+                        </div>
+                        <div class="mb-2">
+                            <label  class="form-label">Rent Type</label><br>
+
+                            <select class="form-control" th:field="*{rentType}">
+                                <option th:each="type:${rentTypies}" th:value="${type.id}" th:text="${type.name}"></option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label  class="form-label">Service Type</label><br>
+
+                            <select class="form-control" th:field="*{serviceType}">
+                                <option th:each="type:${serviceTypies}" th:value="${type.id}" th:text="${type.name}"></option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label for="roomStandard" class="form-label">Room Standard</label>
+                            <input type="text" class="form-control" id="roomStandard" th:field="*{roomStandard}" >
+                        </div>
+                        <div class="mb-2">
+                            <label for="convenient" class="form-label">Decription Other Convenient</label>
+                            <input type="text" class="form-control" id="convenient" th:field="*{convenient}" >
+                        </div>
+                        <div class="mb-2">
+                            <label for="poolArea" class="form-label">Pool Area</label>
+                            <input type="text" class="form-control" id="poolArea" th:field="*{poolArea}" >
+                        </div>
+                        <div class="mb-2">
+                            <label for="numberOfFloor" class="form-label">Number of Floors</label>
+                            <input type="text" class="form-control" id="numberOfFloor" th:field="*{numberOfFloors}" >
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="/customer/layout :: script">
+</div>
+</body>
+</html>
