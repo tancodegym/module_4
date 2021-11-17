@@ -31,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 //        http.httpBasic().disable(); Tắt security
         http.csrf().disable()
-                .formLogin().loginProcessingUrl("/login")
+                .formLogin()
                 .defaultSuccessUrl("/blog").permitAll()
                 .and()
                 .authorizeRequests().
