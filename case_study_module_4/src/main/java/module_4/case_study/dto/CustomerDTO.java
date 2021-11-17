@@ -43,6 +43,15 @@ public class CustomerDTO implements Validator {
     private String address;
     private CustomerType customerType;
     private List<Contract> contractList;
+    private List<Customer> customers;
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
+    }
 
     public CustomerDTO() {
     }
@@ -170,9 +179,9 @@ public class CustomerDTO implements Validator {
 //            if(customerDTO.getIdCard().equals(customer.getIdCard())){
 //                errors.rejectValue("idCard","sameIdCard","ID Card is exist, please enter another ID Card !");
 //            }
-            if(checkEmail(customerDTO.getEmail())){
-                errors.rejectValue("email","sameEmail","Email is exist, please enter another Email !");
-            }
+//            if(checkEmail(customerDTO.getEmail())){
+//                errors.rejectValue("email","sameEmail","Email is exist, please enter another Email !");
+//            }
 //            if(customerDTO.getPhone().equals(customer.getPhone())){
 //                errors.rejectValue("phone","samePhone","Number Phone is exist, please enter another Number Phone !");
 //            }

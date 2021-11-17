@@ -62,7 +62,10 @@ public class CustomerController {
     public String saveCustomer(@ModelAttribute @Validated CustomerDTO customerDTO,
                                BindingResult bindingResult,
                                Model model) {
+        List<Customer> customerList = iCustomerService.findAll();
+        customerDTO.setCustomers(customerList);
         new CustomerDTO().validate(customerDTO,bindingResult);
+
         if (!bindingResult.hasFieldErrors()) {
             Customer customer = new Customer();
             BeanUtils.copyProperties(customerDTO, customer);
@@ -78,25 +81,27 @@ public class CustomerController {
         Customer customer = iCustomerService.findById(id);
         CustomerDTO customerDTO = new CustomerDTO();
         BeanUtils.copyProperties(customer,customerDTO);
-        model.addAttribute("customerDTOEdit", customerDTO);
+        model.addAttribute("customerDTO", customerDTO);
         return "/customer/edit";
     }
 
     @PostMapping("/edit")
-    public String showEditForm(@ModelAttribute @Validated CustomerDTO customerDTOEdit,
+    public String updateCustomer( @Validated  @ModelAttribute CustomerDTO customerDTO,
                                BindingResult bindingResult, Model model) {
-
-        new CustomerDTO().validate(customerDTOEdit,bindingResult);
+        new CustomerDTO().validate(customerDTO,bindingResult);
         if(bindingResult.hasFieldErrors()){
-            model.addAttribute("customerDTOEdit",customerDTOEdit);
+//            model.addAttribute("customerDTOEdit",customerDTOEdit);
+            return "/customer/edit";
+
         }
         else{
             Customer customer = new Customer();
-            BeanUtils.copyProperties(customerDTOEdit,customer);
+            BeanUtils.copyProperties(customerDTO,customer);
             iCustomerService.update(customer);
             model.addAttribute("success", "Update customer successfully !");
+            return "redirect:/customer/";
         }
-        return "/customer/edit";
+
     }
 
     @GetMapping("/delete")
