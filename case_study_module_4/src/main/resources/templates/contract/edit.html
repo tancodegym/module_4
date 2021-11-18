@@ -30,19 +30,22 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <form th:action="@{/contract/edit}" th:object="${contractEdit}" method="post" >
+                    <form th:action="@{/contract/edit}" th:object="${contractDTO}" method="post" >
                         <input type="hidden" th:field="*{id}">
                         <div class="mb-2">
                             <label for="startDate" class="form-label">Start Date</label>
                             <input type="date" class="form-control" id="startDate" th:field="*{startDate}" >
+                            <div style="color: red" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></div>
                         </div>
                         <div class="mb-2">
                             <label for="endDate" class="form-label">End Date</label>
                             <input type="date" class="form-control" id="endDate" th:field="*{endDate}" >
+                            <div style="color: red" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></div>
                         </div>
                         <div class="mb-2">
                             <label for="deposit" class="form-label">Deposit</label>
                             <input type="number" class="form-control" id="deposit" th:field="*{deposit}" >
+                            <div style="color: red" th:if="${#fields.hasErrors('deposit')}" th:errors="*{deposit}"></div>
                         </div>
                         <div class="mb-2">
                             <label for="totalMoney" class="form-label">Total Money</label>

@@ -88,19 +88,16 @@ public class CustomerController {
     @PostMapping("/edit")
     public String updateCustomer( @Validated  @ModelAttribute CustomerDTO customerDTO,
                                BindingResult bindingResult, Model model) {
+        List<Customer> customerList = iCustomerService.findAll();
+        customerDTO.setCustomers(customerList);
         new CustomerDTO().validate(customerDTO,bindingResult);
-        if(bindingResult.hasFieldErrors()){
-//            model.addAttribute("customerDTOEdit",customerDTOEdit);
-            return "/customer/edit";
-
-        }
-        else{
+        if (!bindingResult.hasFieldErrors()) {
             Customer customer = new Customer();
-            BeanUtils.copyProperties(customerDTO,customer);
+            BeanUtils.copyProperties(customerDTO, customer);
             iCustomerService.update(customer);
             model.addAttribute("success", "Update customer successfully !");
-            return "redirect:/customer/";
         }
+        return "/customer/edit";
 
     }
 

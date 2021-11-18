@@ -30,11 +30,18 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void update(User user) {
+        User user1= user;
+        System.out.println(user1);
         iUserRepository.save(user);
     }
 
     @Override
     public List<User> searchByUserName(String usename) {
         return iUserRepository.findByUserNameContaining(usename);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return iUserRepository.findAll();
     }
 }

@@ -12,4 +12,6 @@ public interface IUserService {
     void update(User user);
 
     List<User> searchByUserName(String usename);
+
+    List<User> findAll();
 }

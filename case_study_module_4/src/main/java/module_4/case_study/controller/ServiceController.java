@@ -1,7 +1,10 @@
 package module_4.case_study.controller;
 
+import module_4.case_study.dto.CustomerDTO;
+import module_4.case_study.dto.ServiceDTO;
 import module_4.case_study.model.*;
 import module_4.case_study.service.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,7 +12,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/service")
@@ -40,31 +47,44 @@ public class ServiceController {
 
     @GetMapping("/create")
     public String showCreateForm(Model model) {
-        model.addAttribute("serviceCreate", new Service());
+        ServiceDTO serviceDTO = new ServiceDTO();
+        model.addAttribute("serviceDTO", serviceDTO);
         return "/service/create";
     }
 
     @PostMapping("/create")
-    public String saveService(@PageableDefault(value = 5) Pageable pageable, @ModelAttribute("service") Service service, Model model) {
-        model.addAttribute("success", "Create new service successfully !");
-        iService.save(service);
-        model.addAttribute("serviceCreate", new Service());
+    public String saveService(@ModelAttribute  @Validated ServiceDTO serviceDTO,BindingResult bindingResult, Model model) {
+
+        new ServiceDTO().validate(serviceDTO,bindingResult);
+        if(!bindingResult.hasFieldErrors()){
+            Service service= new Service();
+            BeanUtils.copyProperties(serviceDTO, service);
+            iService.save(service);
+            model.addAttribute("success", "Create new service successfully !");
+        }
         return "/service/create";
     }
 
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("serviceEdit", iService.findById(id));
+        Service service = iService.findById(id);
+        ServiceDTO serviceDTO = new ServiceDTO();
+        BeanUtils.copyProperties(service,serviceDTO);
+        model.addAttribute("serviceDTO", serviceDTO);
         return "/service/edit";
     }
 
     @PostMapping("/edit")
-    public String showEditForm(@ModelAttribute("serviceEdit") Service service, Model model) {
-        iService.update(service);
-        model.addAttribute("success", "Update service successfully !");
+    public String showEditForm(@ModelAttribute @Validated ServiceDTO serviceDTO,BindingResult bindingResult, Model model) {
+        new ServiceDTO().validate(serviceDTO,bindingResult);
+        if(!bindingResult.hasFieldErrors()){
+            Service service= new Service();
+            BeanUtils.copyProperties(serviceDTO,service);
+            iService.update(service);
+            model.addAttribute("success", "Update service successfully !");
+        }
         return "/service/edit";
     }
-
     @GetMapping("/delete")
     public String delete(@RequestParam("idService") Long id, Model model, @PageableDefault(value = 5) Pageable pageable) {
         iService.delete(id);

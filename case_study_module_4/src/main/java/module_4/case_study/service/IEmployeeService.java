@@ -1,12 +1,13 @@
 package module_4.case_study.service;
 
-import module_4.case_study.model.Customer;
 import module_4.case_study.model.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface IEmployeeService {
-    Iterable<Employee> findAll();
+    List<Employee> findAll();
     Page<Employee> findAll(Pageable pageable);
     Employee findById(Long id);
     void delete(Long id);

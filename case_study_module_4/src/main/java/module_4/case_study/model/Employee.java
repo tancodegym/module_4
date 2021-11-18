@@ -1,5 +1,7 @@
 package module_4.case_study.model;
 
+import org.hibernate.engine.internal.Cascade;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -26,9 +28,11 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "division", referencedColumnName = "id")
     private Division division;
+
     @ManyToOne
     @JoinColumn(name = "user", referencedColumnName = "id")
     private User user;
+
     @OneToMany(mappedBy = "employee")
     private List<Contract> contractList;
     public Employee() {

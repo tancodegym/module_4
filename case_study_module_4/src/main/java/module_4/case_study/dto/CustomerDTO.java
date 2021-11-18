@@ -3,22 +3,10 @@ package module_4.case_study.dto;
 import module_4.case_study.model.Contract;
 import module_4.case_study.model.Customer;
 import module_4.case_study.model.CustomerType;
-import module_4.case_study.service.ICustomerService;
-import module_4.case_study.service.impl.CustomerServiceImpl;
-import module_4.case_study.validator.Validate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Component;
+
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -150,20 +138,6 @@ public class CustomerDTO implements Validator {
     }
 
 
-    ICustomerService iCustomerService = new CustomerServiceImpl();
-
-    private  Iterable<Customer> getCustomerList(){
-        return iCustomerService.findAll();
-    }
-    private boolean checkEmail(String email){
-        for(Customer customer: getCustomerList()){
-            if (customer.getEmail().equals(email)){
-                return false;
-            }
-        }
-        return true;
-
-    }
     @Override
     public void validate(Object target, Errors errors) {
 
@@ -173,19 +147,26 @@ public class CustomerDTO implements Validator {
         if (!birthDay.matches(DATE_OF_BIRTH_REGEX)) {
             errors.rejectValue("birthDate","BD","Wrong format, please enter again !");
         }
+        List<Customer> customerList= customerDTO.getCustomers();
+        Long i = customerDTO.getId();
+        for (int j = 0; j < customerList.size(); j++) {
+            if(customerList.get(j).getId()==i){
+                customerList.remove(j);
+                break;
+            }
 
-
-//        for(Customer customer:customerList){
-//            if(customerDTO.getIdCard().equals(customer.getIdCard())){
-//                errors.rejectValue("idCard","sameIdCard","ID Card is exist, please enter another ID Card !");
-//            }
-//            if(checkEmail(customerDTO.getEmail())){
-//                errors.rejectValue("email","sameEmail","Email is exist, please enter another Email !");
-//            }
-//            if(customerDTO.getPhone().equals(customer.getPhone())){
-//                errors.rejectValue("phone","samePhone","Number Phone is exist, please enter another Number Phone !");
-//            }
-//        }
+        }
+        for(Customer customer:customerList){
+            if(customerDTO.getIdCard().equals(customer.getIdCard())){
+                errors.rejectValue("idCard","sameIdCard","ID Card is exist, please enter another ID Card !");
+            }
+            if(customerDTO.getEmail().equals(customer.getEmail())){
+                errors.rejectValue("email","sameEmail","Email is exist, please enter another Email !");
+            }
+            if(customerDTO.getPhone().equals(customer.getPhone())){
+                errors.rejectValue("phone","samePhone","Number Phone is exist, please enter another Number Phone !");
+            }
+        }
         try {
             if(checkMaxAge(birthDay)){
                 errors.rejectValue("birthDate","MaxAge","Age must be less than 100 !");
