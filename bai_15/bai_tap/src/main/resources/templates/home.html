@@ -7,12 +7,12 @@ xmlns:th="http://www.thymleaf.org">
 </head>
 <body>
 <h1>Home Page</h1>
+
 <div sec:authorize="isAuthenticated()">
     <h2>Bạn đã đăng nhập thành công</h2>
     <h3>xin chào : <span sec:authentication="principal.username"></span></h3>
     <span style="color: red" sec:authorize="hasRole('ADMIN')">Admin content</span>
     <span style="color: red" sec:authorize="hasRole('USER')">MEMBER content</span>
 </div>
-
 </body>
 </html>

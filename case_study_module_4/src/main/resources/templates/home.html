@@ -1,55 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymleaf.org/extras/spring-security">
 <head th:replace="/customer/layout :: head">
 </head>
 <body>
-<div class="row">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#"><img style="width: 100px" height="50px" class="img-fluid"
-                                                  src="https://i.imgur.com/t2hf7LR.jpg" alt=""></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
-                    aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarScroll">
-                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                    <li class="nav-item">
-                        <a href="https://furamavietnam.com/vi/the-resort/">Introduce</a>
-                    </li>
-
-                    <li class="nav-item">
-                        CULINARY
-                    </li>
-                    <li class="nav-item dropdown">
-
-                        <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        ẨM THỰC
-                        <!--                        HỘI NGHỊ VÀ SỰ KIỆN-->
-                        <!--                        SPA-->
-                        <!--                        GIẢI TRÍ-->
-                        <!--                        ĐIỂM ĐẾN-->
-                        <!--                        ƯU ĐÃI-->
-                        <!--                        EVOUCHER-->
-                    </li>
-                </ul>
-                <form class="d-flex">
-                    <a href="/login">
-                        <button style="height: 40px;" class=" btn btn-outline-success" type="button">Login</button>
-                    </a>
-                </form>
-            </div>
-        </div>
-    </nav>
-</div>
-
+<div th:replace="/customer/layout :: header"></div>
 <div class="row">
     <div class="col-12 ">
-        <div th:replace="/customer/layout :: navbar">
+        <div sec:authorize="isAuthenticated()" th:replace="/customer/layout :: navbar">
         </div>
     </div>
 </div>
@@ -61,7 +18,6 @@
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen></iframe>
             <h4>Furama Resort Danang</h4>
-
         </div>
         <div class="row">
             <div class="col-12">
@@ -70,7 +26,6 @@
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
                 <h4>FURAMA RESORT DANANG, VIETNAM, 5 SAO BEACH RESORT</h4>
-
             </div>
         </div>
         <div class="row">
@@ -92,19 +47,15 @@
                 <h2 style="font-size: 24px;color: #cbbe73;line-height: 36px;text-align: center;font-family:Playfair Display;font-weight:700;font-style:normal"
                     class=" vc_custom_heading ">WORLD-CLASS RESORT, FURAMA DA NANG, WORLDWIDE AS A CULINARY RESORT IN
                     VIETNAM.</h2>
-
             </div>
         </div>
     </div>
 </div>
-
 <div class="row">
     <div class="col-12 bg-secondary text-center text-light">
         COVID 19 UPDATE: The safety and well-being are our utmost priority
     </div>
 </div>
-
-
 <div th:replace="/customer/layout :: script">
 </div>
 </body>

@@ -3,12 +3,8 @@
 <head th:replace="/customer/layout :: head">
 </head>
 <body>
-<div class="row">
-    <div class="col-12">
-        error 404
+<div th:replace="/customer/layout :: header"></div>
 
-    </div>
-</div>
 <div class="row">
     <div class="col-12 ">
         <div th:replace="/customer/layout :: navbar">
@@ -16,8 +12,11 @@
     </div>
 </div>
 
-
-
+<div class="row">
+    <div class="col-12">
+        error 404
+    </div>
+</div>
 <div th:replace="/customer/layout :: script">
 </div>
 </body>

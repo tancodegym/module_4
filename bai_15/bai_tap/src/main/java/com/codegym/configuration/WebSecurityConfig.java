@@ -36,10 +36,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/home").permitAll()
                 .and().exceptionHandling().accessDeniedPage("/404")
                 .and()
-
-
                 .authorizeRequests().antMatchers("/home").permitAll()
-                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/customer").hasRole("ADMIN")
                 .antMatchers("/member").hasRole("USER")
                 .anyRequest().
                 authenticated();

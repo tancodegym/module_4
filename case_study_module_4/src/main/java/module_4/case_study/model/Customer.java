@@ -18,7 +18,7 @@ public class Customer {
     private String phone;
     private String email;
     private String address;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customerType_id", referencedColumnName = "id")
     private CustomerType customerType;
     @OneToMany(mappedBy = "customer")

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymleaf.org/extras/spring-security">
 <head th:fragment="head">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,6 +15,58 @@
           integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 </head>
 <body>
+<div class="row" th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-success">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/home"><img style="width: 100px" height="50px" class="img-fluid"
+                                                  src="https://i.imgur.com/t2hf7LR.jpg" alt=""></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                    aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="https://furamavietnam.com/vi/the-resort/">Introduce</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="https://furamavietnam.com/vi/culinary/">Food</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="https://furamavietnam.com/vi/spa-and-fitness/">SPA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="https://furamavietnam.com/vi/spa-and-fitness/">Conferences and events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="https://furamavietnam.com/vi/spa-and-fitness/">Entertaiment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="https://furamavietnam.com/vi/spa-and-fitness/">Destination</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="https://furamavietnam.com/vi/spa-and-fitness/">Entertaiment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="https://furamavietnam.com/vi/spa-and-fitness/">Voucher</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+<!--                    <sec:authorize access="isAuthenticated()">-->
+<!--                        Welcome Back, <sec:authentication property="name"/>-->
+<!--                    </sec:authorize>-->
+                    <h3><span sec:authentication="name"></span></h3>
+                    <a sec:authorize="!isAuthenticated()" href="/login">
+                        <button style="height: 40px;" class=" btn btn-outline-light" type="button">Login</button>
+                    </a>
+                    <a sec:authorize="isAuthenticated()" href="/logout">
+                        <button style="height: 40px;" class=" btn btn-outline-light" type="button">Logout</button>
+                    </a>
+                </form>
+            </div>
+        </div>
+    </nav>
+</div>
 <div class="row " th:fragment="navbar">
     <div class="col-12 ">
         <nav class="navbar navbar-expand-lg navbar-light bg-warning">
@@ -64,10 +116,10 @@
 <!--                    </li>-->
 
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-light my-2 my-sm-0">Search</button>
-                </form>
+<!--                <form class="form-inline my-2 my-lg-0">-->
+<!--                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+<!--                    <button class="btn btn-outline-light my-2 my-sm-0">Search</button>-->
+<!--                </form>-->
             </div>
         </nav>
 
