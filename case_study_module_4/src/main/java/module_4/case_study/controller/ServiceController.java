@@ -54,8 +54,9 @@ public class ServiceController {
 
     @PostMapping("/create")
     public String saveService(@ModelAttribute  @Validated ServiceDTO serviceDTO,BindingResult bindingResult, Model model) {
-
-        new ServiceDTO().validate(serviceDTO,bindingResult);
+        ServiceDTO serviceDTO1 = new ServiceDTO();
+        serviceDTO1.validate(serviceDTO,bindingResult);
+//        new ServiceDTO().validate(serviceDTO,bindingResult);
         if(!bindingResult.hasFieldErrors()){
             Service service= new Service();
             BeanUtils.copyProperties(serviceDTO, service);

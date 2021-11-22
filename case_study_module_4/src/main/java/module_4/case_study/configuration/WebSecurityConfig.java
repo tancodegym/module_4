@@ -50,7 +50,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/service/**").hasAnyRole("ADMIN", "MOD")
                 .antMatchers("/contract/**").hasAnyRole("ADMIN", "MOD")
                 .antMatchers("/contractDetail/**").hasAnyRole("ADMIN", "MOD")
-
         ;
 //        .anyRequest().authenticated();
 

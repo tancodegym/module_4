@@ -8,9 +8,7 @@ import org.hibernate.validator.constraints.Range;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.util.List;
 
 public class ServiceDTO implements Validator {
@@ -19,6 +17,9 @@ public class ServiceDTO implements Validator {
     @Pattern(regexp = "([\\p{Lu}][\\p{Ll}]{1,8})(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$",message = "Wrong name format, please enter again ! ")
     private String name;
     @Min(value = 100,message = "Area must be more than 100 square meters !")
+//    @Pattern(regexp = "^(\\d+)(\\.\\d+)?$",message = "Area cant be empty !")
+//    @DecimalMin(value = "0.0001", message = "Area not null ")
+
     private int area;
     @Min(value = 500000,message = "Cost must be greater than 500000 !")
     private double cost;
@@ -159,6 +160,11 @@ public class ServiceDTO implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-
+        ServiceDTO serviceValidate = (ServiceDTO) target;
+        String area = String.valueOf(serviceValidate.getArea());
+        String REGEX = "^(\\d+)(\\.\\d+)?$";
+        if(!area.matches(REGEX)){
+            errors.rejectValue("area", "AREA", "Area can not be empty !");
+        }
     }
 }

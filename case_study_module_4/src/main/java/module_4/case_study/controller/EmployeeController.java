@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -73,10 +74,18 @@ public class EmployeeController {
             Employee employee = new Employee();
             BeanUtils.copyProperties(employeeDTO, employee);
             User user = new User(employeeDTO.getUser().getUserName(), employeeDTO.getUser().getPassword());
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             iUserService.save(user);
             User newUser = iUserService.findByUserName(user.getUserName());
             employee.setUser(newUser);
             iEmployeeService.save(employee);
+            Long pos = employee.getPosition().getId();
+            if((pos !=5) && (pos != 6)){
+                iUserService.addUser(newUser.getId(), (long) 4);
+            }else{
+                iUserService.addAdmin(newUser.getId(),(long) 1,(long) 4);
+            }
             model.addAttribute("success", "Create employee successfully !");
 
         }

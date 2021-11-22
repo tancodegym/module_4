@@ -44,4 +44,14 @@ public class UserServiceImpl implements IUserService {
     public List<User> findAll() {
         return iUserRepository.findAll();
     }
+
+    @Override
+    public void addAdmin(Long userId, Long roleId,Long roleId1) {
+        iUserRepository.addAdmin(userId,roleId,roleId1);
+    }
+
+    @Override
+    public void addUser(Long userId, Long roleId) {
+        iUserRepository.addUser(userId,roleId);
+    }
 }
