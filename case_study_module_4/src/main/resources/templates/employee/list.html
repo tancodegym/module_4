@@ -6,6 +6,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 ">
+            <div th:replace="/customer/layout :: header"></div>
             <div th:replace="/customer/layout :: navbar">
             </div>
         </div>
@@ -95,18 +96,18 @@
                             <li class="page-item"><a class="page-link"
                                                      th:href="@{'/employee'(page=${employeeList.number })}"><span
                                     th:text="${employeeList.number + 1}"></span>/<span
-                                    th:text="${employeeList.totalPages +1}"></span></a></li>
+                                    th:text="${employeeList.totalPages }"></span></a></li>
                             <li class="page-item"><a class="page-link"
                                                      th:href="@{'/employee'(page=${employeeList.number +1 })}"><span
                                     th:text="${employeeList.number + 2}"></span></a></li>
                             <li class="page-item"><a class="page-link"
                                                      th:href="@{'/employee'(page=${employeeList.number +2 })}"><span
                                     th:text="${employeeList.number + 3}"></span></a></li>
-                            <li class="page-item"><a class="page-link"
+                            <li class="page-item"><a class="page-link" th:if="${employeeList.hasNext()}"
                                                      th:href="@{'/employee'(page=${employeeList.number + 1})}">Next</a>
                             </li>
                             <li class="page-item"><a class="page-link"
-                                                     th:href="@{'/employee'(page=${employeeList.totalPages})}">Last
+                                                     th:href="@{'/employee'(page=${employeeList.totalPages}-1)}">Last
                                 Page</a></li>
                         </ul>
                     </nav>

@@ -38,7 +38,7 @@
 </head>
 <body>
 <div class="row" th:fragment="header">
-    <nav class="navbar navbar-expand-lg navbar-light bg-success">
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
         <div class="container-fluid">
             <a class="navbar-brand" href="/home"><img style="width: 100px" height="50px" class="img-fluid"
                                                   src="https://i.imgur.com/t2hf7LR.jpg" alt=""></a>
@@ -77,7 +77,7 @@
 <!--                    <sec:authorize access="isAuthenticated()">-->
 <!--                        Welcome Back, <sec:authentication property="name"/>-->
 <!--                    </sec:authorize>-->
-                    <h3><span sec:authorize="isAuthenticated()" sec:authentication="name"></span></h3>
+                    <h3><span sec:authorize="isAuthenticated()">Welcome, </span><span sec:authorize="isAuthenticated()" sec:authentication="name"></span></h3>
                     <a sec:authorize="!isAuthenticated()" href="/login">
                         <button style="height: 40px;" class=" btn btn-outline-light" type="button">Login</button>
                     </a>

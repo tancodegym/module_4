@@ -49,7 +49,7 @@ public class EmployeeController {
     }
 
     @GetMapping("")
-    public String showIndex(@PageableDefault(value = 4, sort = "code", direction = Sort.Direction.ASC) Pageable pageable, Model model) {
+    public String showIndex(@PageableDefault(value = 3, sort = "code", direction = Sort.Direction.ASC) Pageable pageable, Model model) {
         Page<Employee> employeeList = iEmployeeService.findAll(pageable);
         model.addAttribute("employeeList", employeeList);
         return "/employee/list";
@@ -117,7 +117,8 @@ public class EmployeeController {
         if(!bindingResult.hasFieldErrors()){
             User user = iUserService.findById(employeeDTO.getUser().getId());
             user.setUserName(employeeDTO.getUser().getUserName());
-            user.setPassword(employeeDTO.getUser().getPassword());
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            user.setPassword(bCryptPasswordEncoder.encode(employeeDTO.getUser().getPassword()));
             iUserService.update(user);
 
             Employee employee = new Employee();
@@ -132,7 +133,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/delete")
-    public String delete(@RequestParam("idEmployee") Long id, Model model, @PageableDefault(value = 5) Pageable pageable) {
+    public String delete(@RequestParam("idEmployee") Long id, Model model, @PageableDefault(value = 3) Pageable pageable) {
         iEmployeeService.delete(id);
         model.addAttribute("success", "Delete employee successfully !");
         Page<Employee> employeeList = iEmployeeService.findAll(pageable);
@@ -162,7 +163,7 @@ public class EmployeeController {
                          @RequestParam(value = "educationDegree", defaultValue = "", required = false) String educationDegree,
                          @RequestParam(value = "division", defaultValue = "", required = false) String division,
                          @RequestParam(value = "usename", defaultValue = "", required = false) String usename,
-                         Model model, @PageableDefault(value = 5, sort = "code", direction = Sort.Direction.ASC) Pageable pageable
+                         Model model, @PageableDefault(value = 3, sort = "code", direction = Sort.Direction.ASC) Pageable pageable
     ) {
 
         Page<Employee> employeeList = iEmployeeService.searchAll(pageable, code, name, birthDay, idCard, salary, phone, email, address, position, educationDegree, division, usename);

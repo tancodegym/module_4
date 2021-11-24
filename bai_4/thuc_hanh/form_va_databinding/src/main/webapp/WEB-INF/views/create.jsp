@@ -13,6 +13,7 @@
 </head>
 <body>
 <h3>Welcome, Enter The Employee Details</h3>
+<form action=""></form>
 <form:form method="POST" action="addEmployee" modelAttribute="employee">
     <table>
         <tr>

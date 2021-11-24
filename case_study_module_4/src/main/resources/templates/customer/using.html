@@ -76,9 +76,6 @@
     </div>
     <div class="col-6"></div>
 </div>
-
-
-
 <!-- Modal -->
 <div class="modal fade" id="detail" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -108,8 +105,8 @@
         // alert(id)
         $.ajax({
             headers: {
-                'Accept': "application/json",
-                'Content-Type': "application/json"
+                'Accept': "application/json", // produces nhận về
+                'Content-Type': "application/json" //consumes gửi đi
             },
             type: "GET",
             // data: JSON.stringify(json),
