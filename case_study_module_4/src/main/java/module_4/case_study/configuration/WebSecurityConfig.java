@@ -33,7 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /* Cấu hình security bằng http basic */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        // tắt security
+        //http.httpBasic().disable();
         http.csrf().disable(); //CSRF ( Cross Site Request Forgery) là kĩ thuật tấn công bằng cách sử dụng
         // quyền chứng thực của người sử dụng đối với 1 website khác
 

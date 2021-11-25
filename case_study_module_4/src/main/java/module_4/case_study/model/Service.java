@@ -23,6 +23,9 @@ public class Service {
     private String roomStandard;
     private String convenient;
     private double poolArea;
+
+
+
     private int numberOfFloors;
     @OneToMany(mappedBy = "service")
     private List<Contract> contractList;

@@ -73,17 +73,17 @@
                         </div>
                         <div class="mb-2">
                             <label for="convenient" class="form-label">Decription Other Convenient</label>
-                            <input required type="text" class="form-control" id="convenient" th:field="*{convenient}" >
+                            <input  type="text" class="form-control" id="convenient" th:field="*{convenient}" >
                             <div style="color: red" th:if="${#fields.hasErrors('convenient')}" th:errors="*{convenient}"></div>
                         </div>
                         <div class="mb-2">
                             <label for="poolArea" class="form-label">Pool Area</label>
-                            <input required type="number" class="form-control" id="poolArea" th:field="*{poolArea}" >
+                            <input  type="number" class="form-control" id="poolArea" th:field="*{poolArea}" >
                             <div style="color: red" th:if="${#fields.hasErrors('poolArea')}" th:errors="*{poolArea}"></div>
                         </div>
                         <div class="mb-2">
                             <label for="numberOfFloor" class="form-label">Number of Floors</label>
-                            <input required type="number" class="form-control" id="numberOfFloor" th:field="*{numberOfFloors}" >
+                            <input  type="number" class="form-control" id="numberOfFloor" th:field="*{numberOfFloors}" >
                             <div style="color: red" th:if="${#fields.hasErrors('numberOfFloors')}" th:errors="*{numberOfFloors}"></div>
                         </div>
                         <button type="submit" class="btn btn-primary">Create</button>

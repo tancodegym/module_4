@@ -29,6 +29,8 @@ public class Employee {
     @JoinColumn(name = "division", referencedColumnName = "id")
     private Division division;
 
+
+
     @ManyToOne
     @JoinColumn(name = "user", referencedColumnName = "id")
     private User user;

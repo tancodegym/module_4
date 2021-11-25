@@ -8,12 +8,17 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String code;
+
+
     private String name;
+
     @Column(columnDefinition = "Date")
     private String birthDate;
+
+
     private int gender;
+
     private String idCard;
     private String phone;
     private String email;
