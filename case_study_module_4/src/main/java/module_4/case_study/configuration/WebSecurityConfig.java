@@ -30,6 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(myUserDetailService).passwordEncoder(bCryptPasswordEncoder());
     }
 
+
     /* Cấu hình security bằng http basic */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
